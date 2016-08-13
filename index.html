@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Free yourself from the Browser with Electron</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# Free yourself from the Browser with Electron
+---
+class: center, middle
+
+# About me
+---
+layout: false
+class: center, middle
+# Carmen Long
+## Twitter: [@carmalou](https://twitter.com/carmalou)
+## Blog: [carmalou.com](http://carmalou.com)
+---
+class: center, middle
+
+# Electron..? Isn't that something in an Atom?
+---
+class: left, middle
+
+### Electron is a JavaScript framework that allows you to use JavaScript outside of the browser to build desktop applications.
+---
+class: center, middle
+
+# Whaaaat? Is this some kind of black magic?
+---
+class: left, middle
+
+### Nope, it's just a Chromium window without the url bar, back buttons and other browser navigation tools.
+---
+class: center, middle
+
+# Ok, so it's basically the browser.
+---
+class: center, middle
+
+# Yes and no...
+---
+class: center, middle
+
+# Yes
+---
+class: left, middle
+
+### When the application opens, it uses a chromium window to display the files, which allows the use of HTML, CSS, and JavaScript.
+---
+class: center, middle
+
+# No
+---
+class: left, middle
+
+### The files exist on the computer. They are not being served from another location.
+---
+class: center, middle
+
+# Sounds kinda cool. But why would I leave the browser?
+---
+class: left, middle
+
+### With Electron we can use essentially the same code to run desktop apps and websites. This opens up a world of possibilities.
+---
+class: center, middle
+
+# One codebase, so it's easier to maintain
+---
+class: center, middle
+
+# One codebase compiles for multiple platforms
+---
+class: center, middle
+
+# Only uses Chromium, so no issues with varying browser requirements
+---
+class: center, middle
+
+# Chrome dev tools!
+---
+class: center, middle
+
+# Take existing knowledge and write a desktop app _today_
+---
+class: center, middle
+
+# Examples
+---
+class: left, middle
+
+## - [Slack](link)
+## - [Atom](link)
+## - [Visual Studio Code](link)
+## - [Mapbox Studio](link)
+---
+class: center, middle
+
+# Here are some you might not be familiar with
+---
+class: center, middle
+
+# [HyperTerm](link)
+
+### A cool terminal emulator to run bash commands. And, it's inspectable.
+---
+class: center, middle
+
+# [Brave](link)
+
+### A browser that blocks ads and trackers
+---
+class: center, middle
+
+# [Gitify](link)
+
+### Github notifications in the menubar
+---
+class: center, middle
+
+# [Shake](link)
+
+### Earthquake warning program for Japan
+---
+class: center, middle
+
+# Ok, I'm in. Where should I start?
+---
+class: center, middle
+
+# Window
+---
+class: left, middle
+
+```javascript
+var electron = require('electron');
+var app = electron.app;
+var BrowserWindow = electron.BrowserWindow;
+var mainWindow;
+
+function createWindow () {
+  // Create the browser window.
+  mainWindow = new BrowserWindow({width: 800, height: 600});
+
+  // and load the index.html of the app.
+  mainWindow.loadURL(`file://${__dirname}/index.html`);
+
+  // Emitted when the window is closed.
+  mainWindow.on('closed', function () {
+    mainWindow = null;
+  });
+}
+```
+---
+class: center, middle
+
+# Open finder
+---
+class: left, middle
+
+```javascript
+var shell = require('electron').shell;
+
+shell.showItemInFolder('full/file/path.extension');
+```
+---
+class: center, middle
+
+# Open files
+---
+class: left, middle
+
+```javascript
+var shell = require('electron').shell;
+
+shell.openItem('full/file/path.extension');
+```
+---
+class: center, middle
+
+# Get system information
+---
+class: left, middle
+
+```javascript
+var os = require('os');
+var whatIsMyComp = os.platform();
+
+if(whatIsMyComp == 'darwin') {
+  console.log('you are on mac');
+  useMacFilePath();
+}
+
+if(whatIsMyComp == 'win32') {
+  console.log('you are on windows');
+  useWindowsFilePath();
+}
+
+if(whatIsMyComp == 'linux') {
+  console.log('you are on linux');
+  useLinuxFilePath();
+}
+```
+---
+class: center, middle
+
+# Get screen size
+---
+class: left, middle
+
+```javascript
+var electronScreen = require('electron').screen;
+
+var screenInfoBtn = document.getElementById('screen-info');
+var size = electronScreen.getPrimaryDisplay().size;
+
+screenInfoBtn.addEventListener('click', function () {
+  var message = `Your screen is: ${size.width}px x ${size.height}px`;
+  document.getElementById('got-screen-info').innerHTML = message;
+});
+```
+---
+class: center, middle
+
+# Communicate between processes
+// come back to this
+---
+class: center, middle
+
+# References
+---
+class: center, middle
+
+# Questions?
+
+
+    </textarea>
+    <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
