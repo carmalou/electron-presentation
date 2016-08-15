@@ -67,7 +67,7 @@ ipcMain.on('open-name-window', function() {
 });
 
 ipcMain.on('update-the-name', function(event, name) {
-  console.log('seeing update name in mainjs');
-  mainWindow.webContents.send('render-the-name', name);
-  nameWindow.close();
+  // event.sender.send('render-the-name', name); // communicate with the window that sent the initial message
+  mainWindow.webContents.send('render-the-name', name); // communicate with a specific window
+  nameWindow.close(); // close new window
 });
