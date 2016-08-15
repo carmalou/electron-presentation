@@ -21,7 +21,7 @@
 
 class: center, middle
 
-# Free yourself from the Browser with Electron
+# Free yourself from the Browser with [Electron](http://electron.atom.io/)
 ---
 class: center, middle
 
@@ -55,7 +55,7 @@ class: center, middle
 ---
 class: left, middle
 
-### Nope. Chromium is an open source browser that pre-dates Google Chrome. Google Chrome is based on Chromium.
+### Nope. [Chromium](https://www.chromium.org/) is an open source browser that pre-dates Google Chrome. Google Chrome is based on Chromium.
 ---
 class: center, middle
 
@@ -115,6 +115,10 @@ class: center, middle
 ---
 class: center, middle
 
+# Still not convinced?
+---
+class: center, middle
+
 # One codebase, so it's easier to maintain
 ---
 class: center, middle
@@ -139,10 +143,10 @@ class: center, middle
 ---
 class: left, middle
 
-## - [Slack](link)
-## - [Atom](link)
-## - [Visual Studio Code](link)
-## - [Mapbox Studio](link)
+## - [Slack](https://slack.com/)
+## - [Atom](https://atom.io/)
+## - [Visual Studio Code](https://code.visualstudio.com)
+## - [Mapbox Studio Classic](https://www.mapbox.com/help/define-mapbox-studio-classic/)
 ---
 class: center, middle
 
@@ -150,27 +154,27 @@ class: center, middle
 ---
 class: center, middle
 
-# [HyperTerm](link)
+# [HyperTerm](https://hyperterm.org/)
 
 ### A cool terminal emulator to run bash commands. And, it's inspectable.
 ---
 class: center, middle
 
-# [Brave](link)
+# [Brave](https://brave.com/)
 
 ### A browser that blocks ads and trackers
 ---
 class: center, middle
 
-# [Gitify](link)
+# [Gitify](http://gitify.io/)
 
 ### Github notifications in the menubar
 ---
 class: center, middle
 
-# [Shake](link)
+# [Shake](http://kurisubrooks.com/shake)
 
-### Earthquake warning program for Japan
+### Earthquake early warning program for Japan
 ---
 class: center, middle
 
@@ -269,7 +273,77 @@ console.log(size.height); // height of screen in pixels
 class: center, middle
 
 # Communicate between processes
-// come back to this
+---
+class: center, middle
+
+# Main process
+---
+class: left, middle
+
+## - Handles opening and closing windows
+## - Can communicate with renderer process
+## - Receives messages on `ipcMain`
+## - Sends messages on `webContents`
+---
+class: center, middle
+
+# Renderer process
+---
+class: left, middle
+
+## - Controller for window
+## - Each window has its own renderer process
+## - Sends and receives messages on `ipcRenderer`
+---
+class: left, middle
+
+# renderer.js sends message to main.js
+
+```javascript
+function openTheWindow() {
+  ipcRenderer.send('open-name-window');
+}```
+---
+class: left, middle
+
+# main.js receives message from renderer.js
+
+```javascript
+ipcMain.on('open-name-window', function() {
+  if(nameWindow != undefined) {
+    return;
+  }
+  nameWindow = new BrowserWindow({ width: 400, height: 300 });
+  nameWindow.loadURL(`file://${__dirname}/changeName.html`);
+  nameWindow.on('closed', function() {
+    nameWindow = null;
+  });
+});
+```
+---
+class: left, middle
+
+# new renderer process sends message to main.js
+
+```javascript
+function sendNameBack(event) {
+  event.preventDefault();
+  var tmpName = document.getElementById('newName').value;
+  ipcRenderer.send('update-the-name', tmpName);
+}
+```
+---
+class: left, middle
+
+# main.js sends message to main renderer window
+
+```javascript
+ipcMain.on('update-the-name', function(event, name) {
+  // event.sender.send('render-the-name', name); // communicate with the window that sent the initial message
+  mainWindow.webContents.send('render-the-name', name); // communicate with a specific window
+  nameWindow.close(); // close new window
+});
+```
 ---
 class: center, middle
 
