@@ -51,6 +51,14 @@ class: left, middle
 ---
 class: center, middle
 
+# Oh, Chromium? That's the black magic, right?
+---
+class: left, middle
+
+### Nope. Chromium is an open source browser that pre-dates Google Chrome. Google Chrome is based on Chromium.
+---
+class: center, middle
+
 # Ok, so it's basically the browser.
 ---
 class: center, middle
@@ -80,6 +88,30 @@ class: center, middle
 class: left, middle
 
 ### With Electron we can use essentially the same code to run desktop apps and websites. This opens up a world of possibilities.
+---
+class: center, middle
+
+# Free yourself from the Browser
+---
+class: center, middle
+
+# Free yourself from the Internet
+---
+class: center, middle
+
+# What is "offline?"
+---
+class: center, middle
+
+# Intermittent Internet
+---
+class: center, middle
+
+# No Internet Access
+---
+class: center, middle
+
+# Webpage is down
 ---
 class: center, middle
 
@@ -228,14 +260,10 @@ class: left, middle
 
 ```javascript
 var electronScreen = require('electron').screen;
-
-var screenInfoBtn = document.getElementById('screen-info');
 var size = electronScreen.getPrimaryDisplay().size;
 
-screenInfoBtn.addEventListener('click', function () {
-  var message = `Your screen is: ${size.width}px x ${size.height}px`;
-  document.getElementById('got-screen-info').innerHTML = message;
-});
+console.log(size.width); // width of screen in pixels
+console.log(size.height); // height of screen in pixels
 ```
 ---
 class: center, middle
