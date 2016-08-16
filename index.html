@@ -182,6 +182,14 @@ class: center, middle
 ---
 class: center, middle
 
+# Electron apps have three basic parts
+
+## - package.json (lists dependencies and points to main file)
+## - main.js (opens and closes windows and loads html files)
+## - index.html (the webpage being rendered)
+---
+class: center, middle
+
 # Window
 ---
 class: left, middle
@@ -295,6 +303,10 @@ class: left, middle
 ## - Each window has its own renderer process
 ## - Sends and receives messages on `ipcRenderer`
 ---
+
+  <p>Hi! My name is <span id="name">BLANK</span>.</p>
+
+---
 class: left, middle
 
 # renderer.js sends message to main.js
@@ -339,11 +351,25 @@ class: left, middle
 
 ```javascript
 ipcMain.on('update-the-name', function(event, name) {
-  // event.sender.send('render-the-name', name); // communicate with the window that sent the initial message
-  mainWindow.webContents.send('render-the-name', name); // communicate with a specific window
-  nameWindow.close(); // close new window
+  // communicate with the window that sent the initial message
+  // event.sender.send('render-the-name', name);
+
+  // communicate with a specific window
+  mainWindow.webContents.send('render-the-name', name);
+
+  // close new window
+  nameWindow.close();
 });
 ```
+---
+class: center, middle
+
+# So where do we go from here?
+---
+class: left, middle
+
+## - Try it out yourself with [Electron Quick Start](https://github.com/electron/electron-quick-start)
+## - Download the [Electron APIs Demo](http://electron.atom.io/#get-started)
 ---
 class: center, middle
 
@@ -359,6 +385,8 @@ class: center, middle
     </script>
     <script>
       var slideshow = remark.create();
+      // You can also require other files to run in this process
+      require('./renderer.js')
     </script>
   </body>
 </html>
